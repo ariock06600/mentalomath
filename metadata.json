@@ -1,0 +1,6 @@
+{
+  "name": "MathiMulti - Tables de Multiplication & Calcul Rapide",
+  "description": "Jeu éducatif et coloré pour apprendre les tables de multiplication, relever des défis chronométrés et booster son calcul mental pour l'école primaire.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
