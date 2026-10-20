@@ -80,71 +80,210 @@ export const AVATAR_LIST: AvatarOption[] = [
 ];
 
 export const ALL_BADGES: Badge[] = [
+  // --- Catégorie : Calcul Mental (MentaloMath) ---
   {
     id: 'first_step',
     name: 'Premier Pas',
     description: 'Complète ta toute première partie de calcul mental !',
     iconName: 'Footprints',
+    category: 'math',
+    rarity: 'bronze',
+    hint: 'Joue une partie en mode Calcul Mental.',
   },
   {
     id: 'streak_5',
     name: 'Combo X5 !',
     description: 'Enchaîne 5 bonnes réponses consécutives sans erreur.',
     iconName: 'Flame',
+    category: 'math',
+    rarity: 'argent',
+    hint: 'Garde ta concentration pendant 5 questions.',
   },
   {
     id: 'streak_10',
     name: 'Champion Inarrêtable',
     description: 'Réalise un combo de 10 bonnes réponses d’affilée.',
     iconName: 'Zap',
+    category: 'math',
+    rarity: 'or',
+    hint: 'Enchaîne 10 calculs justes d’un coup !',
   },
   {
     id: 'speed_demon',
     name: 'Éclair Turbo',
     description: 'Trouve la bonne réponse en moins d’une seconde chrono.',
     iconName: 'Gauge',
+    category: 'math',
+    rarity: 'or',
+    hint: 'Réponds plus vite que ton ombre !',
   },
   {
     id: 'addition_pro',
     name: 'As de l’Addition',
     description: 'Réussis 5 additions d’affilée sans aucune hésitation.',
     iconName: 'Plus',
+    category: 'math',
+    rarity: 'argent',
+    hint: 'Sélectionne l’addition (+) et réussis 5 calculs.',
   },
   {
     id: 'subtraction_pro',
     name: 'Expert Soustraction',
     description: 'Réussis 5 soustractions d’affilée avec brio.',
     iconName: 'Minus',
+    category: 'math',
+    rarity: 'argent',
+    hint: 'Sélectionne la soustraction (−) et réussis 5 calculs.',
   },
   {
     id: 'division_master',
     name: 'Maître de la Division',
     description: 'Trouve le bon quotient 5 fois consécutives.',
     iconName: 'Divide',
+    category: 'math',
+    rarity: 'argent',
+    hint: 'Sélectionne la division (÷) et réussis 5 partages.',
   },
   {
     id: 'polymath_all4',
     name: 'Génie des 4 Opérations',
     description: 'Termine une partie avec les 4 opérations (+, −, ×, ÷) actives !',
     iconName: 'Sparkles',
+    category: 'math',
+    rarity: 'or',
+    hint: 'Coche les 4 symboles mathématiques avant de lancer.',
   },
   {
     id: 'perfect_target',
     name: 'Score Parfait 100%',
     description: 'Termine une série de 15 questions ou plus sans aucune faute.',
     iconName: 'Award',
+    category: 'math',
+    rarity: 'or',
+    hint: 'Défi 15 questions en mode cible avec zéro erreur.',
   },
   {
     id: 'score_300',
     name: 'Maestro des Maths',
     description: 'Marque plus de 300 points dans une partie chronométrée.',
     iconName: 'Trophy',
+    category: 'math',
+    rarity: 'or',
+    hint: 'Combine rapidité et combos en Sprint 60s.',
   },
   {
     id: 'century_club',
     name: 'Club des 100',
-    description: 'Résous plus de 100 calculs au total !',
+    description: 'Résous plus de 100 calculs au total dans ton carnet !',
     iconName: 'Crown',
+    category: 'math',
+    rarity: 'diamant',
+    hint: 'Entraîne-toi régulièrement pour cumuler 100 calculs.',
+  },
+
+  // --- Catégorie : Auto-Dictée (CM1.2) ---
+  {
+    id: 'autodictee_step1',
+    name: 'Recopieur Appliqué',
+    description: 'Complète l’Exercice 1 en recopiant le modèle sans faute.',
+    iconName: 'PenTool',
+    category: 'dictee',
+    rarity: 'bronze',
+    hint: 'Rends-toi dans l’Auto-Dictée > Exercice 1.',
+  },
+  {
+    id: 'autodictee_step2',
+    name: 'Détective des Trous',
+    description: 'Complète avec succès la dictée à trous préparée par les parents (Exercice 2).',
+    iconName: 'Puzzle',
+    category: 'dictee',
+    rarity: 'argent',
+    hint: 'Lance et valide l’Exercice 2 de l’Auto-Dictée.',
+  },
+  {
+    id: 'autodictee_step3',
+    name: 'Compteur de Lettres',
+    description: 'Réussis l’Exercice 3 en t’aidant des tirets de longueur de mots.',
+    iconName: 'Hash',
+    category: 'dictee',
+    rarity: 'argent',
+    hint: 'Complète les mots masqués avec l’aide des tirets.',
+  },
+  {
+    id: 'autodictee_step4',
+    name: 'Mémoire d’Or',
+    description: 'Réussis la dictée complète de mémoire sans aucune aide (Exercice 4).',
+    iconName: 'Award',
+    category: 'dictee',
+    rarity: 'or',
+    hint: 'Écris toute la dictée de mémoire sans modèle.',
+  },
+  {
+    id: 'autodictee_grand_chelem',
+    name: 'Grand Chelem de la Dictée',
+    description: 'Valide l’ensemble des 4 exercices de l’auto-dictée !',
+    iconName: 'Crown',
+    category: 'dictee',
+    rarity: 'diamant',
+    hint: 'Termine les 4 étapes : Recopier, Trous, Tirets et Sans aide.',
+  },
+  {
+    id: 'autodictee_zero_faute',
+    name: 'Zéro Faute Magistral',
+    description: 'Obtiens 100% de réussite à une auto-dictée sans utiliser le coup d’œil.',
+    iconName: 'CheckCheck',
+    category: 'dictee',
+    rarity: 'or',
+    hint: 'Corrige ta dictée avec 0 faute sans aperçu.',
+  },
+
+  // --- Catégorie : Chronomètre Activable à l'Envie ---
+  {
+    id: 'chrono_adepte',
+    name: 'Maître du Temps',
+    description: 'Active et utilise le chronomètre sur un exercice de ton choix.',
+    iconName: 'Clock',
+    category: 'chrono',
+    rarity: 'bronze',
+    hint: 'Active l’interrupteur chrono sur n’importe quel exercice.',
+  },
+  {
+    id: 'chrono_sprinteur',
+    name: 'Sprinteur Chrono',
+    description: 'Termine une session d’entraînement de maths avec le chrono actif.',
+    iconName: 'Zap',
+    category: 'chrono',
+    rarity: 'argent',
+    hint: 'Fais des calculs tout en gardant le chrono en marche.',
+  },
+  {
+    id: 'chrono_eclair_dictée',
+    name: 'Plume Rapide',
+    description: 'Termine un exercice d’auto-dictée en moins de 2 minutes chrono !',
+    iconName: 'Timer',
+    category: 'chrono',
+    rarity: 'or',
+    hint: 'Remplis un exercice d’auto-dictée rapidement avec le chrono.',
+  },
+
+  // --- Catégorie : Vacances de la Toussaint CM1.2 ---
+  {
+    id: 'toussaint_assidu',
+    name: 'Élève Modèle de Toussaint',
+    description: 'Pratique à la fois le calcul mental et l’auto-dictée pendant les vacances.',
+    iconName: 'Calendar',
+    category: 'toussaint',
+    rarity: 'argent',
+    hint: 'Débloque au moins un trophée en Maths et un en Dictée.',
+  },
+  {
+    id: 'toussaint_super_champion',
+    name: 'Super Champion CM1.2',
+    description: 'Débloque au moins 8 trophées dans ton carnet des vacances de la Toussaint !',
+    iconName: 'Trophy',
+    category: 'toussaint',
+    rarity: 'diamant',
+    hint: 'Collecte 8 trophées au total dans l’application.',
   },
 ];
 
@@ -542,11 +681,24 @@ export function updatePlayerStats(
     finalElapsedMs
   );
 
-  const allBadgeIds = Array.from(
-    new Set([...prevStats.unlockedBadgeIds, ...newlyUnlocked])
+  const allBadgeIdsSet = new Set([...(prevStats.unlockedBadgeIds || []), ...newlyUnlocked]);
+
+  // Check composite badges: toussaint_assidu & toussaint_super_champion
+  const hasMathBadge = [...allBadgeIdsSet].some((b) =>
+    ['first_step', 'streak_5', 'addition_pro', 'score_300', 'century_club'].includes(b)
   );
+  const hasDicteeBadge = [...allBadgeIdsSet].some((b) =>
+    b.startsWith('autodictee_')
+  );
+  if (hasMathBadge && hasDicteeBadge) {
+    allBadgeIdsSet.add('toussaint_assidu');
+  }
+  if (allBadgeIdsSet.size >= 8) {
+    allBadgeIdsSet.add('toussaint_super_champion');
+  }
 
   return {
+    ...prevStats,
     gamesPlayed: updatedGames,
     totalQuestions: updatedTotalQuestions,
     totalCorrect: updatedTotalCorrect,
@@ -558,6 +710,46 @@ export function updatePlayerStats(
     tableAttemptsCount: newTableAttempts,
     operatorSuccessCount: newOpSuccess,
     operatorAttemptsCount: newOpAttempts,
-    unlockedBadgeIds: allBadgeIds,
+    unlockedBadgeIds: Array.from(allBadgeIdsSet),
   };
 }
+
+export function unlockSpecificBadges(
+  prevStats: PlayerStats,
+  badgeIdsToUnlock: string[]
+): { updatedStats: PlayerStats; newlyUnlocked: string[] } {
+  const currentBadgeIds = new Set(prevStats.unlockedBadgeIds || []);
+  const newlyUnlocked: string[] = [];
+
+  for (const id of badgeIdsToUnlock) {
+    if (!currentBadgeIds.has(id)) {
+      currentBadgeIds.add(id);
+      newlyUnlocked.push(id);
+    }
+  }
+
+  // Composite check
+  const hasMathBadge = [...currentBadgeIds].some((b) =>
+    ['first_step', 'streak_5', 'addition_pro', 'score_300', 'century_club'].includes(b)
+  );
+  const hasDicteeBadge = [...currentBadgeIds].some((b) =>
+    b.startsWith('autodictee_')
+  );
+  if (hasMathBadge && hasDicteeBadge && !currentBadgeIds.has('toussaint_assidu')) {
+    currentBadgeIds.add('toussaint_assidu');
+    newlyUnlocked.push('toussaint_assidu');
+  }
+
+  if (currentBadgeIds.size >= 8 && !currentBadgeIds.has('toussaint_super_champion')) {
+    currentBadgeIds.add('toussaint_super_champion');
+    newlyUnlocked.push('toussaint_super_champion');
+  }
+
+  const updatedStats: PlayerStats = {
+    ...prevStats,
+    unlockedBadgeIds: Array.from(currentBadgeIds),
+  };
+
+  return { updatedStats, newlyUnlocked };
+}
+

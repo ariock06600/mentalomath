@@ -41,6 +41,9 @@ export interface Badge {
   name: string;
   description: string;
   iconName: string;
+  category?: 'math' | 'dictee' | 'chrono' | 'toussaint';
+  rarity?: 'bronze' | 'argent' | 'or' | 'diamant';
+  hint?: string;
   unlockedAt?: string;
 }
 
@@ -57,6 +60,10 @@ export interface PlayerStats {
   operatorSuccessCount: Record<MathOperator, number>;
   operatorAttemptsCount: Record<MathOperator, number>;
   unlockedBadgeIds: string[];
+  autodicteeCompletedSteps?: number[];
+  autodicteeTotalCompleted?: number;
+  chronoTotalSessions?: number;
+  bestChronoDicteeMs?: number | null;
 }
 
 export interface AvatarOption {

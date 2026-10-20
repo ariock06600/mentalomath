@@ -24,6 +24,7 @@ import {
   TABLE_TIPS,
 } from '../game/engine.ts';
 import { sounds } from '../utils/audio.ts';
+import { ExerciseChrono } from './ExerciseChrono.tsx';
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -400,6 +401,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
           )}
         </div>
       </div>
+
+      {/* Chronomètre activable à l'envie */}
+      <ExerciseChrono
+        id="math_game_chrono"
+        label="Chronomètre Calcul Mental"
+        compact={true}
+      />
 
       {/* Main Question Arena Card */}
       <div

@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header.tsx';
+import { LandingPage } from './components/LandingPage.tsx';
+import { AutoDicteeScreen } from './components/AutoDicteeScreen.tsx';
 import { DifficultyConfig } from './components/DifficultyConfig.tsx';
 import { GameScreen } from './components/GameScreen.tsx';
 import { ResultsModal } from './components/ResultsModal.tsx';
@@ -17,18 +19,21 @@ import {
   AnswerRecord,
   PlayerStats,
   AvatarOption,
+  DifficultyPreset,
 } from './game/types.ts';
 import {
   DEFAULT_SETTINGS,
   getDefaultPlayerStats,
   updatePlayerStats,
+  unlockSpecificBadges,
   AVATAR_LIST,
+  PRESET_CONFIGS,
 } from './game/engine.ts';
 import { sounds } from './utils/audio.ts';
 
 export default function App() {
-  // Navigation tabs: 'play' | 'learn' | 'stats'
-  const [activeTab, setActiveTab] = useState<'play' | 'learn' | 'stats'>('play');
+  // Navigation tabs: 'home' | 'play' | 'learn' | 'stats' | 'autodictee'
+  const [activeTab, setActiveTab] = useState<'home' | 'play' | 'learn' | 'stats' | 'autodictee'>('home');
 
   // Play sub-state: 'CONFIG' | 'PLAYING' | 'RESULTS'
   const [playState, setPlayState] = useState<'CONFIG' | 'PLAYING' | 'RESULTS'>('CONFIG');
@@ -109,12 +114,17 @@ export default function App() {
     localStorage.setItem('mathimulti_stats', JSON.stringify(playerStats));
   }, [playerStats]);
 
-  // Support ?autostart=1 query param to start gameplay immediately
+  // Support ?autostart=1 or ?tab=play query params to start gameplay or open play tab directly
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       if (params.get('autostart') === '1') {
+        setActiveTab('play');
         setPlayState('PLAYING');
+      } else if (params.get('tab') === 'play') {
+        setActiveTab('play');
+      } else if (params.get('tab') === 'autodictee') {
+        setActiveTab('autodictee');
       }
     }
   }, []);
@@ -133,6 +143,18 @@ export default function App() {
   };
 
   const handleStartGame = () => {
+    setPlayState('PLAYING');
+  };
+
+  const handleStartPreset = (preset: DifficultyPreset, mode: GameMode) => {
+    const cfg = PRESET_CONFIGS[preset];
+    setSettings((prev) => ({
+      ...prev,
+      ...cfg,
+      difficulty: preset,
+    }));
+    setGameMode(mode);
+    setActiveTab('play');
     setPlayState('PLAYING');
   };
 
@@ -200,6 +222,14 @@ export default function App() {
     setPlayState('PLAYING');
   };
 
+  const handleUnlockBadges = (badgeIds: string[]) => {
+    const { updatedStats, newlyUnlocked } = unlockSpecificBadges(playerStats, badgeIds);
+    if (newlyUnlocked.length > 0) {
+      setPlayerStats(updatedStats);
+      sounds.playFanfare();
+    }
+  };
+
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors ${theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-900 text-slate-100'}`}>
       {/* Top Navigation */}
@@ -221,6 +251,22 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+        {activeTab === 'home' && (
+          <LandingPage
+            onNavigate={(tab) => {
+              setActiveTab(tab);
+              if (tab === 'play' && playState === 'RESULTS') {
+                setPlayState('CONFIG');
+              }
+            }}
+            onStartPreset={handleStartPreset}
+            onQuickDrillTable={handleQuickDrillTable}
+            playerStats={playerStats}
+            playerName={playerName}
+            playerAvatar={playerAvatar}
+          />
+        )}
+
         {activeTab === 'play' && (
           <>
             {playState === 'CONFIG' && (
@@ -256,6 +302,21 @@ export default function App() {
           </>
         )}
 
+        {activeTab === 'autodictee' && (
+          <AutoDicteeScreen
+            onBackToHome={() => {
+              setActiveTab('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onGoToMath={() => {
+              setActiveTab('play');
+              if (playState === 'RESULTS') setPlayState('CONFIG');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onUnlockBadges={handleUnlockBadges}
+          />
+        )}
+
         {activeTab === 'learn' && (
           <LearningScreen onQuickDrillTable={handleQuickDrillTable} />
         )}
@@ -265,18 +326,76 @@ export default function App() {
             stats={playerStats}
             onResetStats={handleResetStats}
             onDrillTable={handleQuickDrillTable}
+            onNavigateTo={(tab) => {
+              setActiveTab(tab);
+              if (tab === 'play' && playState === 'RESULTS') setPlayState('CONFIG');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
       </main>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-slate-800 bg-slate-900/60 py-4 px-4 text-center text-xs text-slate-400">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <footer className="mt-auto border-t border-slate-800 bg-slate-900/60 py-5 px-4 text-center text-xs text-slate-400">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="font-medium text-slate-300">
-            <span className="font-bold text-amber-400">MentaloMath</span> · Apprendre les tables de multiplication en s’amusant · Pour élèves du CP au CM2 · Créé par <span className="font-semibold text-slate-100">Pierre NDT</span>
+            <span className="font-bold text-amber-400">Travail pendant les vacances de la Toussaint pour les CM1.2</span> · MentaloMath (Calcul Mental) & Auto-Dictée (4 étapes) · Créé par <span className="font-semibold text-slate-100">Pierre NDT</span>
           </div>
-          <div className="text-slate-500">
-            Calcul mental rapide · Sans publicité · 100% éducatif
+          <div className="flex items-center gap-2.5 text-slate-400 text-[11px] flex-wrap justify-center">
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setActiveTab('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              Accueil
+            </button>
+            <span className="text-slate-600">•</span>
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setActiveTab('play');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              Calcul Mental
+            </button>
+            <span className="text-slate-600">•</span>
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setActiveTab('autodictee');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-emerald-300 transition-colors cursor-pointer font-medium text-emerald-400"
+            >
+              Auto-Dictée
+            </button>
+            <span className="text-slate-600">•</span>
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setActiveTab('learn');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              Tables & Astuces
+            </button>
+            <span className="text-slate-600">•</span>
+            <button
+              onClick={() => {
+                sounds.playClick();
+                setActiveTab('stats');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              Trophées
+            </button>
           </div>
         </div>
       </footer>
